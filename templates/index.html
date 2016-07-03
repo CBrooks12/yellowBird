@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<title>yellowBird</title>
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+
+<!--NAV BAR-->
+<div class="navbar navbar-inverse navbar-static-top">
+<div class="container">
+<a class="navbar-brand" href="/index">yellowBird</a>
+</div>
+</div>
+
+<!---MAIN CONTENT-->
+<div class="container">
+<div class="jumbotron">
+<h1>Welcome to <b>yellowBird</b></h1>
+<br>
+    <form id="myform">
+        Enter Hashtag: <input type="text" id="hashtag" placeholder="#something"><br>
+        <input id="formBtn" type="button" value="Get Data">
+    </form>
+</div>
+</div>
+<div id="data"></div>
+<script type="text/javascript">
+$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+$("#formBtn").click(function(){
+        var _id = $('#hashtag').val();
+        var aVar = JSON.stringify({hashtag: _id});
+        $.getJSON($SCRIPT_ROOT + "/_getHashtagData",
+        {aThing: aVar},
+        function(data){
+        if(data['result']=="true"){
+            document.getElementById("data").innerHTML = "";
+            document.getElementById("data").innerHTML = data['val'];
+        }
+    });
+});
+</script>
+</div>
+</body>
+</html>
